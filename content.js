@@ -13,6 +13,9 @@ const iconTranslateSVG = `
 const toolbar = document.createElement('div')
 const selectLanguage = document.createElement('select')
 const buttonTranslate = document.createElement('button')
+const containerTools = document.createElement("div")
+const titleNode = document.createElement("h1")
+
 const listLanguages = [
   {
     label: 'English',
@@ -41,13 +44,28 @@ toolbar.style.right = '50%'
 toolbar.style.width = '100%'
 toolbar.style.height = '50px'
 toolbar.style.display = 'flex'
+toolbar.style.padding = '0em 4em'
 toolbar.style.justifyContent = 'center'
 toolbar.style.alignItems = 'center'
 toolbar.style.gap = '5px'
 toolbar.style.backgroundColor = 'white'
 toolbar.style.zIndex = '9999999999999999999999999999999999999999999'
 toolbar.id = 'toolbartranslate'
+toolbar.style.display = "grid"
+toolbar.style.gridTemplateColumns = "1fr 1fr 1fr";
 
+///TITLE
+
+titleNode.textContent = "Shine"
+titleNode.style.color = "#000000"
+
+///CONTAINER
+
+
+containerTools.style.display = "flex"
+containerTools.style.justifyContent = "center"
+containerTools.style.alignItems = "center"
+containerTools.style.gap = "1em"
 ////SelectorLanguage
 selectLanguage.id = 'selectLanguageTranslate'
 selectLanguage.style.width = '120px'
@@ -126,8 +144,9 @@ if (window.location.href.includes(urlDomainSpotify)) {
 
   buttonTranslate.addEventListener('click', handleClickLyrics)
 
-  toolbar.appendChild(selectLanguage)
-  toolbar.appendChild(buttonTranslate)
-
+  toolbar.appendChild(titleNode)
+  containerTools.appendChild(selectLanguage)
+  containerTools.appendChild(buttonTranslate)
+  toolbar.appendChild(containerTools)
   document.body.prepend(toolbar)
 }
