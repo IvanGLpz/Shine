@@ -58,7 +58,7 @@ toolbar.style.gridTemplateColumns = "1fr 1fr 1fr";
 
 titleNode.textContent = "Shine"
 titleNode.style.color = "#000000"
-
+titleNode.style.fontWeight = "700"
 ///CONTAINER
 
 
