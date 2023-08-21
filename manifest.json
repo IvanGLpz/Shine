@@ -4,8 +4,7 @@
     "version": "1.0",
     "description": " Translated lyrics for barrier-free music enjoyment!",
     "permissions": [
-        "activeTab",
-        "http://localhost:3005/*"
+        "activeTab"
     ],
     "action": {
         "default_popup": "popup.html",
