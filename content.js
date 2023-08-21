@@ -46,11 +46,11 @@ toolbar.id = 'toolbartranslate'
 
 ////SelectorLanguage
 selectLanguage.id = 'selectLanguageTranslate'
-selectLanguage.style.width = '100px'
+selectLanguage.style.width = '120px'
 selectLanguage.style.height = '40px'
 selectLanguage.style.padding = '0.5em'
 selectLanguage.style.borderRadius = '4px'
-selectLanguage.style.border = '1px solid black'
+selectLanguage.style.border = '0.2px solid black'
 selectLanguage.style.backgroundColor = 'white'
 selectLanguage.style.cursor = 'pointer'
 selectLanguage.style.zIndex = '9999999999999999999999999999999999999999999'
