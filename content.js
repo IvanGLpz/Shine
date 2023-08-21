@@ -80,10 +80,7 @@ if (window.location.href.includes(spotifyUrl)) {
 
     const generateLyrics = () => {
         const blocks = document.querySelectorAll('[data-testid="fullscreen-lyric"]')
-
         const language = document.getElementById('selectiontranslate').value
-        console.log(language, 'language')
-        // const mainContainer = document.querySelector('.esRByMgBY3TiENAsbDHA');
 
         const dataArray = Array.from(blocks).map((item) => ({
             class: item.className,
@@ -93,14 +90,11 @@ if (window.location.href.includes(spotifyUrl)) {
 
         const handleExecute = async () => {
             try {
-                console.log('Translating now!')
-
                 const url = 'https://lyricbackend.whil.online/translate'
                 const data = {
                     lyrics: dataArray,
                     language: language,
                 }
-
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
@@ -113,7 +107,6 @@ if (window.location.href.includes(spotifyUrl)) {
 
                 const newlyrics = result?.lyrics
 
-                console.log(newlyrics, 'newlyrics')
 
                 blocks.forEach((element, index) => {
                     element.textContent = element.textContent.replace(
@@ -125,7 +118,6 @@ if (window.location.href.includes(spotifyUrl)) {
                 console.log('error', error)
             }
         }
-
         handleExecute()
     }
 
