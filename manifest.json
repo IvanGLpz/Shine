@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Shine",
     "version": "1.0",
-    "description": "Amplify your music with Shine. Translate Spotify lyrics to five languages: Spanish, English, French, Japanese, Korean. Download now for barrier-free musical immersion!",
+    "description": " Translated lyrics for barrier-free music enjoyment!",
     "permissions": [
         "activeTab",
         "http://localhost:3005/*"
