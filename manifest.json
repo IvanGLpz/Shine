@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Shine",
     "version": "1.0",
-    "description": "Shine is a web extension for translate lyrics from spotify in realtime!",
+    "description": "Translate Spotify lyrics in real-time with this web extension, enriching your music journey with instant lyric translations",
     "permissions": [
         "activeTab",
         "http://localhost:3005/*"
