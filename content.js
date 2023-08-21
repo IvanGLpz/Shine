@@ -1,53 +1,44 @@
-
-const spotifyUrl = "https://open.spotify.com"
+const spotifyUrl = 'https://open.spotify.com'
 
 const url = window.location.url
 
-
 if (window.location.href.includes(spotifyUrl)) {
-    const buttonExecute = document.createElement("button")
-    const containerSelection = document.createElement("div")
-    const selectorLanguage = document.createElement("select")
-
-
+    const buttonExecute = document.createElement('button')
+    const containerSelection = document.createElement('div')
+    const selectorLanguage = document.createElement('select')
 
     const arrLanguages = [
         {
-            label: "English",
-            value: "en",
+            label: 'English',
+            value: 'en',
         },
         {
-            label: "Spanish",
-            value: "es"
+            label: 'Spanish',
+            value: 'es',
         },
         {
-            label: "Korean",
-            value: "ko"
+            label: 'Korean',
+            value: 'ko',
         },
         {
-            label: "Japanese",
-            value: "ja"
+            label: 'Japanese',
+            value: 'ja',
         },
         {
-            label: "French",
-            value: "fr"
-        }
+            label: 'French',
+            value: 'fr',
+        },
     ]
 
-    selectorLanguage.id = "selectiontranslate"
+    selectorLanguage.id = 'selectiontranslate'
     for (const iterator of arrLanguages) {
-        const option = document.createElement("option")
+        const option = document.createElement('option')
         option.value = iterator.value
         option.textContent = iterator.label
         selectorLanguage.appendChild(option)
-
     }
 
-
-
     const root = document.body
-
-
 
     buttonExecute.innerHTML = `
 <svg width="20" height="20" viewBox="0 0 57 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,99 +47,91 @@ if (window.location.href.includes(spotifyUrl)) {
 
     
     `
-    buttonExecute.style.width = "40px"
-    buttonExecute.style.height = "40px"
-    buttonExecute.style.padding = "0.5em"
-    buttonExecute.style.borderRadius = "12px"
-    buttonExecute.style.border = "1px solid black"
-    buttonExecute.style.backgroundColor = "#000000"
-    buttonExecute.style.cursor = "pointer"
-    buttonExecute.style.zIndex = "9999999999999999999999999999999999999999999"
+    buttonExecute.style.width = '40px'
+    buttonExecute.style.height = '40px'
+    buttonExecute.style.padding = '0.5em'
+    buttonExecute.style.borderRadius = '12px'
+    buttonExecute.style.border = '1px solid black'
+    buttonExecute.style.backgroundColor = '#000000'
+    buttonExecute.style.cursor = 'pointer'
+    buttonExecute.style.zIndex = '9999999999999999999999999999999999999999999'
 
+    selectorLanguage.style.width = '100px'
+    selectorLanguage.style.height = '40px'
+    selectorLanguage.style.padding = '0.5em'
+    selectorLanguage.style.borderRadius = '12px'
+    selectorLanguage.style.border = '1px solid black'
+    selectorLanguage.style.backgroundColor = 'white'
+    selectorLanguage.style.cursor = 'pointer'
+    selectorLanguage.style.zIndex = '9999999999999999999999999999999999999999999'
 
-    selectorLanguage.style.width = "100px"
-    selectorLanguage.style.height = "40px"
-    selectorLanguage.style.padding = "0.5em"
-    selectorLanguage.style.borderRadius = "12px"
-    selectorLanguage.style.border = "1px solid black"
-    selectorLanguage.style.backgroundColor = "white"
-    selectorLanguage.style.cursor = "pointer"
-    selectorLanguage.style.zIndex = "9999999999999999999999999999999999999999999"
-
-    containerSelection.style.position = "absolute"
-    containerSelection.style.width = "200px"
-    containerSelection.style.height = "200px"
-    containerSelection.style.padding = "0.5em"
-    containerSelection.style.borderRadius = "12px"
-    containerSelection.style.border = "1px solid black"
-    containerSelection.style.backgroundColor = "white"
-    containerSelection.style.cursor = "pointer"
-    containerSelection.style.top = "1.4em"
-    containerSelection.style.right = "50%"
-    containerSelection.style.zIndex = "9999999999999999999999999999999999999999999"
+    containerSelection.style.position = 'absolute'
+    containerSelection.style.width = '200px'
+    containerSelection.style.height = '200px'
+    containerSelection.style.padding = '0.5em'
+    containerSelection.style.borderRadius = '12px'
+    containerSelection.style.border = '1px solid black'
+    containerSelection.style.backgroundColor = 'white'
+    containerSelection.style.cursor = 'pointer'
+    containerSelection.style.top = '1.4em'
+    containerSelection.style.right = '50%'
+    containerSelection.style.zIndex =
+        '9999999999999999999999999999999999999999999'
 
     const generateLyrics = () => {
-        const blocks = document.querySelectorAll('[data-testid="fullscreen-lyric"]');
+        const blocks = document.querySelectorAll('[data-testid="fullscreen-lyric"]')
 
-
-        const language = document.getElementById("selectiontranslate").value
-        console.log(language, "language");
+        const language = document.getElementById('selectiontranslate').value
+        console.log(language, 'language')
         // const mainContainer = document.querySelector('.esRByMgBY3TiENAsbDHA');
 
-        const dataArray = Array.from(blocks).map(item => ({
+        const dataArray = Array.from(blocks).map((item) => ({
             class: item.className,
-            text: item.textContent || "--default text--",
-            dataset: item?.dataset?.testid || "\n"
-        }));
-
+            text: item.textContent || '--default text--',
+            dataset: item?.dataset?.testid || '\n',
+        }))
 
         const handleExecute = async () => {
             try {
-                console.log("Translating now!");
+                console.log('Translating now!')
 
-                const url = "https://lyricbackend.whil.online/translate";
+                const url = 'https://lyricbackend.whil.online/translate'
                 const data = {
                     lyrics: dataArray,
-                    language: language
-                };
+                    language: language,
+                }
 
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
-                });
+                    body: JSON.stringify(data),
+                })
 
-                const result = await response.json();
-
+                const result = await response.json()
 
                 const newlyrics = result?.lyrics
 
-                console.log(newlyrics, "newlyrics");
+                console.log(newlyrics, 'newlyrics')
 
                 blocks.forEach((element, index) => {
-                    element.textContent = element.textContent.replace(newlyrics?.[index]?.defautltText, newlyrics?.[index]?.text);
-                });
-
-
-
+                    element.textContent = element.textContent.replace(
+                        newlyrics?.[index]?.defautltText,
+                        newlyrics?.[index]?.text
+                    )
+                })
             } catch (error) {
-                console.log('error', error);
+                console.log('error', error)
             }
+        }
 
-
-        };
-
-        handleExecute();
+        handleExecute()
     }
 
-
-
-    buttonExecute.addEventListener("click", generateLyrics)
+    buttonExecute.addEventListener('click', generateLyrics)
 
     containerSelection.appendChild(selectorLanguage)
     containerSelection.appendChild(buttonExecute)
     root.appendChild(containerSelection)
 }
-
