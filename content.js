@@ -36,7 +36,7 @@ toolbar.style.top = '1.4em'
 toolbar.style.right = '50%'
 toolbar.style.width = '100%'
 toolbar.style.height = '50px'
-toolbar.style.display = "flex"
+toolbar.style.display = 'flex'
 toolbar.style.justifyContent = 'center'
 toolbar.style.alignItems = 'center'
 toolbar.style.gap = '5px'
@@ -78,7 +78,7 @@ if (window.location.href.includes(urlDomainSpotify)) {
   }
   //inyect toolbar
 
-  const onLyrics = () => {
+  const handleClickLyrics = () => {
     const blocks = document.querySelectorAll('[data-testid="fullscreen-lyric"]')
     const language = document.getElementById('selectLanguageTranslate').value
 
@@ -120,7 +120,7 @@ if (window.location.href.includes(urlDomainSpotify)) {
     postLyrics()
   }
 
-  buttonTranslate.addEventListener('click', onLyrics)
+  buttonTranslate.addEventListener('click', handleClickLyrics)
 
   toolbar.appendChild(selectLanguage)
   toolbar.appendChild(buttonTranslate)
