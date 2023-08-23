@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Shine",
     "version": "1.0",
-    "description": " Translated lyrics for barrier-free music enjoyment!",
+    "description": "Lyric Translator for Diverse Preferences",
     "permissions": [],
     "action": {
         "default_popup": "popup.html",
