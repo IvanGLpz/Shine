@@ -1,41 +1,19 @@
-const urlDomainSpotify = 'https://open.spotify.com'
+const url_domain_spotify = "https://open.spotify.com";
+const url_domain_ytmusic = "https://music.youtube.com/";
 
-const urlDomainYouTube = "https://music.youtube.com/"
-
-const urlMain = "https://lyricbackend.whil.online"
-
-const currentUrl = window.location.url
-
-
-
-const iconTranslateSVG = ` 
+const shineIconDark = ` 
 <svg width="20" height="20" viewBox="0 0 57 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M28.1131 51L39.8484 20.4H45.2647L57 51H51.5837L48.8756 43.2225H36.3665L33.5294 51H28.1131ZM37.914 38.76H47.1991L42.6855 26.1375H42.4276L37.914 38.76ZM7.73756 43.35L4.1267 39.78L17.1516 26.9025C15.5181 25.1175 14.0884 23.2688 12.8624 21.3563C11.6364 19.4438 10.5729 17.425 9.67195 15.3H15.0882C15.862 16.83 16.6899 18.2112 17.572 19.4437C18.4541 20.6762 19.5176 21.9725 20.7624 23.3325C22.6538 21.2925 24.2229 19.199 25.4695 17.0519C26.7161 14.9048 27.7692 12.6208 28.629 10.2H0V5.1H18.0543V0H23.2127V5.1H41.267V10.2H33.7873C32.8846 13.2175 31.6595 16.15 30.112 18.9975C28.5645 21.845 26.6516 24.5225 24.3733 27.03L30.5633 33.2775L28.629 38.505L20.6335 30.6L7.73756 43.35Z" fill="#000000"/>
 </svg>
+`;
 
-`
-const iconTranslateBlackSVG = ` 
+const shineIconLight = `
 <svg width="25" height="25" viewBox="0 0 57 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M28.1131 51L39.8484 20.4H45.2647L57 51H51.5837L48.8756 43.2225H36.3665L33.5294 51H28.1131ZM37.914 38.76H47.1991L42.6855 26.1375H42.4276L37.914 38.76ZM7.73756 43.35L4.1267 39.78L17.1516 26.9025C15.5181 25.1175 14.0884 23.2688 12.8624 21.3563C11.6364 19.4438 10.5729 17.425 9.67195 15.3H15.0882C15.862 16.83 16.6899 18.2112 17.572 19.4437C18.4541 20.6762 19.5176 21.9725 20.7624 23.3325C22.6538 21.2925 24.2229 19.199 25.4695 17.0519C26.7161 14.9048 27.7692 12.6208 28.629 10.2H0V5.1H18.0543V0H23.2127V5.1H41.267V10.2H33.7873C32.8846 13.2175 31.6595 16.15 30.112 18.9975C28.5645 21.845 26.6516 24.5225 24.3733 27.03L30.5633 33.2775L28.629 38.505L20.6335 30.6L7.73756 43.35Z" fill="#ffffff"/>
 </svg>
-`
-const mainContainer = document.createElement("div")
-const toolbarContainer = document.createElement('div')
-const selectLanguage = document.createElement('select')
-const buttonTranslate = document.createElement('button')
-const containerTools = document.createElement("div")
-const titleNode = document.createElement("h1")
+`;
 
-const styleElement = document.createElement('style');
-
-styleElement.textContent = `
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  `;
-
-const loader = `
+const loaderHTML = `
      <span style="
       position: absolute;
       transform: translate(-50%, -50%);
@@ -46,227 +24,229 @@ const loader = `
       height: 18px;
       animation: spin 1s linear infinite;
     "></span>
-    `
-
+`;
 const listLanguages = [
   {
-    label: 'English',
-    value: 'en',
+    label: "English",
+    value: "en",
   },
   {
-    label: 'Spanish',
-    value: 'es',
+    label: "Spanish",
+    value: "es",
   },
   {
-    label: 'Korean',
-    value: 'ko',
+    label: "Korean",
+    value: "ko",
   },
   {
-    label: 'Japanese',
-    value: 'ja',
+    label: "Japanese",
+    value: "ja",
   },
   {
-    label: 'French',
-    value: 'fr',
+    label: "French",
+    value: "fr",
   },
-]
-mainContainer.style.padding = "8px"
-mainContainer.style.width = '100%'
-mainContainer.style.height = '69px'
-mainContainer.style.display = 'flex'
-mainContainer.style.justifyContent = 'center'
-mainContainer.style.alignItems = 'center'
-mainContainer.style.gap = '5px'
-mainContainer.style.backgroundColor = '#000'
-mainContainer.style.zIndex = '9999999999999999999999999999999999999999999'
-mainContainer.id = 'toolbartranslate'
+];
 
+const main_container = document.createElement("div");
+const toolbar_container = document.createElement("div");
+const shine_title = document.createElement("h1");
+const tools_container = document.createElement("div");
+const language_selector = document.createElement("select");
+const translate_button = document.createElement("button");
+const loader_styles = document.createElement("style");
 
+///////////  main_container
 
-///toolbar
+main_container.style.padding = "8px";
+main_container.style.width = "100%";
+main_container.style.height = "69px";
+main_container.style.display = "flex";
+main_container.style.justifyContent = "center";
+main_container.style.alignItems = "center";
+main_container.style.gap = "5px";
+main_container.style.backgroundColor = "#000";
+main_container.style.zIndex = "9999999999999999999999999999999999999999999";
+main_container.id = "toolbartranslate";
 
-toolbarContainer.style.backgroundColor = "#121212"
-toolbarContainer.style.width = "100%"
-toolbarContainer.style.display = "flex"
-toolbarContainer.style.flexDirection = "row"
-toolbarContainer.style.justifyContent = "space-between"
-toolbarContainer.style.borderRadius = "8px"
-toolbarContainer.style.padding = "8px 12px"
-///TITLE
+/////////toolbar_container
 
-titleNode.innerHTML = `${iconTranslateBlackSVG} Shine`
-titleNode.style.color = "#ffffff"
-titleNode.style.fontWeight = "700"
-titleNode.style.display = "flex"
-titleNode.style.fontSize = "1.5em"
-titleNode.style.alignItems = "center"
-///CONTAINER
+toolbar_container.style.backgroundColor = "#121212";
+toolbar_container.style.width = "100%";
+toolbar_container.style.display = "flex";
+toolbar_container.style.flexDirection = "row";
+toolbar_container.style.justifyContent = "space-between";
+toolbar_container.style.borderRadius = "8px";
+toolbar_container.style.padding = "8px 12px";
 
+//////////shine title
 
-containerTools.style.display = "flex"
-containerTools.style.justifyContent = "center"
-containerTools.style.alignItems = "center"
-containerTools.style.gap = "1em"
-////SelectorLanguage
-selectLanguage.id = 'selectLanguageTranslate'
-selectLanguage.style.width = '120px'
-selectLanguage.style.height = '40px'
-selectLanguage.style.padding = '0.5em'
-selectLanguage.style.borderRadius = '4px'
-selectLanguage.style.border = '0.2px solid #121212'
-selectLanguage.style.backgroundColor = '#121212'
-selectLanguage.style.color = '#ffffff'
-selectLanguage.style.cursor = 'pointer'
-selectLanguage.style.zIndex = '9999999999999999999999999999999999999999999'
+shine_title.innerHTML = `${shineIconDark} Shine`;
+shine_title.style.color = "#ffffff";
+shine_title.style.fontWeight = "700";
+shine_title.style.display = "flex";
+shine_title.style.fontSize = "1.5em";
+shine_title.style.alignItems = "center";
 
-///ButtonTranslate
+/////////// tools_container
 
-buttonTranslate.innerHTML = iconTranslateSVG
-buttonTranslate.style.display = "flex"
-buttonTranslate.style.alignItems = "center"
-buttonTranslate.style.justifyContent = "center"
-buttonTranslate.style.width = '40px'
-buttonTranslate.style.height = '40px'
-buttonTranslate.style.padding = '0.5em'
-buttonTranslate.style.borderRadius = '4px'
-buttonTranslate.style.border = '1px solid black'
-buttonTranslate.style.backgroundColor = '#ffffff'
-buttonTranslate.style.cursor = 'pointer'
-buttonTranslate.style.zIndex = '9999999999999999999999999999999999999999999'
+tools_container.style.display = "flex";
+tools_container.style.justifyContent = "center";
+tools_container.style.alignItems = "center";
+tools_container.style.gap = "1em";
 
-//ValidateIfIsCorrectDomain
+////////// language_selector
 
-document.head.appendChild(styleElement)
+language_selector.id = "selectLanguageTranslate";
+language_selector.style.width = "120px";
+language_selector.style.height = "40px";
+language_selector.style.padding = "0.5em";
+language_selector.style.borderRadius = "4px";
+language_selector.style.border = "0.2px solid #121212";
+language_selector.style.backgroundColor = "#121212";
+language_selector.style.color = "#ffffff";
+language_selector.style.cursor = "pointer";
+language_selector.style.zIndex = "9999999999999999999999999999999999999999999";
 
+///////// translate_button
 
-if (window.location.href.includes(urlDomainSpotify)) {
+translate_button.innerHTML = shineIconDark;
+translate_button.style.display = "flex";
+translate_button.style.alignItems = "center";
+translate_button.style.justifyContent = "center";
+translate_button.style.width = "40px";
+translate_button.style.height = "40px";
+translate_button.style.padding = "0.5em";
+translate_button.style.borderRadius = "4px";
+translate_button.style.border = "1px solid black";
+translate_button.style.backgroundColor = "#ffffff";
+translate_button.style.cursor = "pointer";
+translate_button.style.zIndex = "9999999999999999999999999999999999999999999";
+
+////// Loader Styles
+
+loader_styles.textContent = `
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+
+const CreateElementsShine = () => {
+  document.head.appendChild(loader_styles);
   for (const iterator of listLanguages) {
-    const option = document.createElement('option')
-    option.value = iterator.value
-    option.textContent = iterator.label
-    selectLanguage.appendChild(option)
+    const option = document.createElement("option");
+    option.value = iterator.value;
+    option.textContent = iterator.label;
+    language_selector.appendChild(option);
   }
-  //inyect toolbar
+  toolbar_container.appendChild(shine_title);
+  tools_container.appendChild(language_selector);
+  tools_container.appendChild(translate_button);
+  toolbar_container.appendChild(tools_container);
+  main_container.appendChild(toolbar_container);
+  return main_container;
+};
 
-  const handleClickLyrics = () => {
-    buttonTranslate.innerHTML = loader
-    const blocks = document.querySelectorAll('[data-testid="fullscreen-lyric"]')
-    const language = document.getElementById('selectLanguageTranslate').value
+const endpoint = "https://lyricbackend.whil.online";
 
-    const dataArray = Array.from(blocks).map((item) => ({
+const endpoint_spotify = `${endpoint}/translate`;
+
+const endpoint_ytmusic = `${endpoint}/translate/single`;
+
+const current_url = window.location.href;
+
+if (current_url.includes(url_domain_spotify)) {
+  const handleClickTranslateLyrics = () => {
+    translate_button.innerHTML = loaderHTML;
+
+    const blocks_lyrics = document.querySelectorAll(
+      '[data-testid="fullscreen-lyric"]'
+    );
+    const language = language_selector.value;
+
+    const lyrics = Array.from(blocks_lyrics)?.map?.((item) => ({
       class: item.className,
-      text: item.textContent || '--default text--',
-      dataset: item?.dataset?.testid || '\n',
-    }))
+      text: item.textContent || "--default text--",
+      dataset: item?.dataset?.testid || "\n",
+    }));
 
-    const postLyrics = async () => {
+    const handleTranslateLyrics = async () => {
       try {
-        const url = 'https://lyricbackend.whil.online/translate'
-        const data = {
-          lyrics: dataArray,
-          language: language,
-        }
-        const response = await fetch(url, {
-          method: 'POST',
+        const response = await fetch(endpoint_spotify, {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
-        })
+          body: JSON.stringify({
+            lyrics,
+            language,
+          }),
+        });
+        const result = await response.json();
 
-        const result = await response.json()
+        const newlyrics = result?.lyrics;
 
-        const newlyrics = result?.lyrics
-
-        blocks.forEach((element, index) => {
-          element.style.fontSize = "2.3rem"
+        blocks_lyrics.forEach((element, index) => {
+          element.style.fontSize = "2.3rem";
           element.textContent = element.textContent.replace(
             newlyrics?.[index]?.defautltText,
             newlyrics?.[index]?.text
-          )
-        })
-        buttonTranslate.innerHTML = iconTranslateSVG
+          );
+        });
+        translate_button.innerHTML = shineIconDark;
       } catch (error) {
-        alert("An error has occurred with Shine")
+        translate_button.innerHTML = shineIconDark;
+        alert("An error has occurred with Shine Lyrics Translator");
       }
-    }
-    postLyrics()
-  }
-
-  buttonTranslate.addEventListener('click', handleClickLyrics)
-  toolbarContainer.appendChild(titleNode)
-  containerTools.appendChild(selectLanguage)
-  containerTools.appendChild(buttonTranslate)
-  toolbarContainer.appendChild(containerTools)
-  mainContainer.appendChild(toolbarContainer)
-  document.body.prepend(mainContainer)
+    };
+    handleTranslateLyrics();
+  };
+  translate_button.addEventListener("click", handleClickTranslateLyrics);
+  const main_container = CreateElementsShine();
+  document.body.prepend(main_container);
 }
 
+if (current_url.includes(url_domain_ytmusic)) {
+  const ytnavbar_container = document.getElementById("right-content");
 
+  const handleClickTranslateLyrics = () => {
+    translate_button.innerHTML = loaderHTML;
+    const language = language_selector.value;
 
+    const formattedStringElement = document.querySelector(
+      ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
+    );
 
-////YOU TUBE MUSIC
-
-
-const containerNavbarYouTube = document.getElementById("right-content")
-const newText = document.createElement("p")
-
-const contents = document.getElementById("contents")
-
-
-if (window.location.href.includes(urlDomainYouTube)) {
-
-  for (const iterator of listLanguages) {
-    const option = document.createElement('option')
-    option.value = iterator.value
-    option.textContent = iterator.label
-    selectLanguage.appendChild(option)
-  }
-
-  const handleClickLyrics = () => {
-
-    buttonTranslate.innerHTML = loader
-    const language = document.getElementById('selectLanguageTranslate').value
-
-    const formattedStringElement = document.querySelector('.non-expandable.description.style-scope.ytmusic-description-shelf-renderer');
-
-    const postLyrics = async () => {
+    const handleTranslateLyrics = async () => {
       try {
-        const url = `${urlMain}/translate/single`
-        const data = {
-          single_lyrics: `${formattedStringElement.textContent}`,
-          language: language,
-        }
-        const response = await fetch(url, {
-          method: 'POST',
+        const response = await fetch(endpoint_ytmusic, {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
-        })
+          body: JSON.stringify({
+            single_lyrics: `${formattedStringElement.textContent}`,
+            language: language,
+          }),
+        });
 
-        const result = await response.json()
+        const result = await response.json();
 
-        const newlyrics = result?.single_lyrics
-        formattedStringElement.textContent = newlyrics
-        buttonTranslate.innerHTML = iconTranslateSVG
-
+        const newlyrics = result?.single_lyrics;
+        formattedStringElement.textContent = newlyrics;
+        translate_button.innerHTML = shineIconDark;
       } catch (error) {
-        alert("An error has occurred with Shine")
+        alert("An error has occurred with Shine Lyrics");
+        translate_button.innerHTML = shineIconDark;
       }
-    }
-    postLyrics()
-  }
+    };
+    handleTranslateLyrics();
+  };
 
-  buttonTranslate.addEventListener('click', handleClickLyrics)
-  toolbarContainer.appendChild(titleNode)
-  containerTools.appendChild(selectLanguage)
-  containerTools.appendChild(buttonTranslate)
-  toolbarContainer.appendChild(containerTools)
-  mainContainer.style.backgroundColor = "transparent"
-  toolbarContainer.style.backgroundColor = "transparent"
-  mainContainer.appendChild(toolbarContainer)
-  containerNavbarYouTube.prepend(mainContainer)
+  translate_button.addEventListener("click", handleClickTranslateLyrics);
+  const main_container = CreateElementsShine();
+  main_container.style.backgroundColor = "transparent";
+  toolbar_container.style.backgroundColor = "transparent";
+  ytnavbar_container.prepend(main_container);
 }
-
-
