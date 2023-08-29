@@ -322,10 +322,11 @@ if (current_url.includes(url_domain_ytmusic)) {
 
         lyricsElemnt.style.position = "relative";
 
+        lyricsTagPInyect.style.display = "flex";
+
         lyricsTagPInyect.style.backgroundColor = "#030303";
         lyricsTagPInyect.style.color = "white";
         lyricsTagPInyect.style.position = "absolute";
-        lyricsTagPInyect.style.display = "flex";
         lyricsTagPInyect.style.height = "100%";
         lyricsTagPInyect.style.top = "0";
         lyricsTagPInyect.style.fontSize = "1.6em";
@@ -358,6 +359,7 @@ if (current_url.includes(url_domain_ytmusic)) {
       const mywindow = document.getElementById("windowWithTranslate");
       mywindow.style.display = "none";
       mywindow.textContent = "";
+      mywindow.style.backgroundColor = "transparent";
       const formattedStringElement = document.querySelector(
         ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
       );
