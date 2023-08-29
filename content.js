@@ -247,19 +247,21 @@ let isConfirmedToChange = false;
 if (current_url.includes(url_domain_ytmusic)) {
   const ytnavbar_container = document.getElementById("right-content");
 
-  const newWindow = document.createElement("div");
-  newWindow.id = "windowWithTranslate";
-
+  const lyricsTagPInyect = document.createElement("p");
+  lyricsTagPInyect.id = "windowWithTranslate";
+  lyricsTagPInyect.textContent = "";
+  lyricsTagPInyect.style.display = "flex";
+  lyricsTagPInyect.style.flexDirection = "column";
   const handleClickTranslateLyrics = () => {
     translate_button.innerHTML = loaderHTML;
     const language = language_selector.value;
 
     const handleTranslateLyrics = async () => {
-      const formattedStringElement = document.querySelector(
+      const originalLyrics = document.querySelector(
         ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
       );
 
-      if (!formattedStringElement?.textContent?.length) {
+      if (!originalLyrics?.textContent?.length) {
         translate_button.innerHTML = shineIconDark;
         alert("Please Go to Lyrics section ");
         return;
@@ -281,13 +283,10 @@ if (current_url.includes(url_domain_ytmusic)) {
         ?.map((item) => normalizeText(item?.textContent))
         ?.join(",");
 
-      const FormatterStringElement = document.getElementById(
+      const LyricsCallTagPInyect = document.getElementById(
         "windowWithTranslate"
       );
-      const lyricsWithoutBr = FormatterStringElement?.textContent?.replace(
-        /<br>/g,
-        "\n"
-      );
+      const lyricsReplaceNWithBrTag = LyricsCallTagPInyect?.innerHTML;
 
       const targetElement = document.querySelector(
         '[page-type="MUSIC_PAGE_TYPE_TRACK_LYRICS"]'
@@ -297,40 +296,53 @@ if (current_url.includes(url_domain_ytmusic)) {
         '[page-type="MUSIC_PAGE_TYPE_TRACK_LYRICS"]'
       );
 
+      const myBody = {
+        single_lyrics: `${
+          lyricsReplaceNWithBrTag?.length
+            ? lyricsReplaceNWithBrTag
+            : originalLyrics.textContent?.replace(/\n/g, "<br>")
+        }`,
+        language: language,
+        authors: normalizeAuthors,
+        title_song: normalizeTitle,
+      };
+
+      console.log(
+        originalLyrics.textContent?.replace(/\n/g, "<br>"),
+        "ORIGINAL"
+      );
+      console.log(lyricsReplaceNWithBrTag, "NEW LYRICS");
+      console.log(myBody, "SENDBODY");
       try {
         const response = await fetch(endpoint_ytmusic, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            single_lyrics: `${
-              lyricsWithoutBr || formattedStringElement.textContent
-            }`,
-            language: language,
-            authors: normalizeAuthors,
-            title_song: normalizeTitle,
-          }),
+          body: JSON.stringify(myBody),
         });
 
         const result = await response.json();
 
         const newlyrics = result?.single_lyrics;
 
+        console.log(newlyrics, "BACKEND RESULT");
+
         lyricsElemnt.style.position = "relative";
 
-        newWindow.style.backgroundColor = "#030303";
-        newWindow.style.color = "white";
-        newWindow.style.position = "absolute";
-        newWindow.style.display = "flex";
-        newWindow.style.height = "100%";
-        newWindow.style.top = "0";
-        newWindow.style.fontSize = "1.6em";
-        formattedStringElement.style.opacity = "0";
-        formattedStringElement.style.userSelect = "none";
-        newWindow.innerHTML = newlyrics?.replace(/\n/g, "<br>");
+        lyricsTagPInyect.style.backgroundColor = "#030303";
+        lyricsTagPInyect.style.color = "white";
+        lyricsTagPInyect.style.position = "absolute";
+        lyricsTagPInyect.style.display = "flex";
+        lyricsTagPInyect.style.height = "100%";
+        lyricsTagPInyect.style.top = "0";
+        lyricsTagPInyect.style.fontSize = "1.6em";
+        originalLyrics.style.opacity = "0";
+        originalLyrics.style.userSelect = "none";
 
-        lyricsElemnt.appendChild(newWindow);
+        lyricsTagPInyect.innerHTML = newlyrics;
+
+        lyricsElemnt.appendChild(lyricsTagPInyect);
         translate_button.innerHTML = shineIconDark;
         isConfirmedToChange = true;
       } catch (error) {
