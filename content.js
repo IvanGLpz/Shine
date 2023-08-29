@@ -307,12 +307,6 @@ if (current_url.includes(url_domain_ytmusic)) {
         title_song: normalizeTitle,
       };
 
-      console.log(
-        originalLyrics.textContent?.replace(/\n/g, "<br>"),
-        "ORIGINAL"
-      );
-      console.log(lyricsReplaceNWithBrTag, "NEW LYRICS");
-      console.log(myBody, "SENDBODY");
       try {
         const response = await fetch(endpoint_ytmusic, {
           method: "POST",
@@ -325,8 +319,6 @@ if (current_url.includes(url_domain_ytmusic)) {
         const result = await response.json();
 
         const newlyrics = result?.single_lyrics;
-
-        console.log(newlyrics, "BACKEND RESULT");
 
         lyricsElemnt.style.position = "relative";
 
