@@ -257,7 +257,9 @@ if (current_url.includes(url_domain_ytmusic)) {
     const language = language_selector.value;
 
     const handleTranslateLyrics = async () => {
-      const originalLyrics = document.querySelector(
+      const mainContainerMaster = document.getElementById("player-page");
+
+      const originalLyrics = mainContainerMaster.querySelector(
         ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
       );
 
@@ -360,10 +362,14 @@ if (current_url.includes(url_domain_ytmusic)) {
       mywindow.style.display = "none";
       mywindow.textContent = "";
       mywindow.style.backgroundColor = "transparent";
-      const formattedStringElement = document.querySelector(
+
+      const mainContainerMaster = document.getElementById("player-page");
+
+      const originalLyrics = mainContainerMaster.querySelector(
         ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
       );
-      formattedStringElement.style.opacity = "1";
+
+      originalLyrics.style.opacity = "1";
     }
   });
 
