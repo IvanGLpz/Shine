@@ -242,43 +242,60 @@ if (current_url.includes(url_domain_spotify)) {
   document.body.prepend(main_container);
 }
 
+let isConfirmedToChange = false;
+
 if (current_url.includes(url_domain_ytmusic)) {
   const ytnavbar_container = document.getElementById("right-content");
+
+  const newWindow = document.createElement("div");
+  newWindow.id = "windowWithTranslate";
 
   const handleClickTranslateLyrics = () => {
     translate_button.innerHTML = loaderHTML;
     const language = language_selector.value;
 
-    const formattedStringElement = document.querySelector(
-      ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
-    );
-
-    const titleElement = document.querySelector(
-      ".title.style-scope.ytmusic-player-bar"
-    );
-    const authors = document.querySelectorAll(
-      "a.yt-simple-endpoint.style-scope.yt-formatted-string"
-    );
-
-    const normalizeTitle = normalizeText(titleElement?.textContent);
-
-    const normalizeAuthors = Array.from(authors)
-      ?.map((item) => normalizeText(item?.textContent))
-      ?.join(",");
-
     const handleTranslateLyrics = async () => {
+      const formattedStringElement = document.querySelector(
+        ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
+      );
+
       if (!formattedStringElement?.textContent?.length) {
         translate_button.innerHTML = shineIconDark;
-        alert("Go to Lyrics page");
+        alert("Please Go to Lyrics section ");
         return;
       }
 
-      console.log({
-        single_lyrics: `${formattedStringElement.textContent}`,
-        language: language,
-        authors: normalizeAuthors,
-        title_song: normalizeTitle,
-      });
+      const divElement = document.querySelector(
+        "div.content-info-wrapper.style-scope.ytmusic-player-bar"
+      );
+      const newTitle = divElement.querySelector(
+        ".title.style-scope.ytmusic-player-bar"
+      );
+      const authors2 = divElement.querySelectorAll(
+        "a.yt-simple-endpoint.style-scope.yt-formatted-string"
+      );
+
+      const normalizeTitle = normalizeText(newTitle?.textContent);
+
+      const normalizeAuthors = Array.from(authors2)
+        ?.map((item) => normalizeText(item?.textContent))
+        ?.join(",");
+
+      const FormatterStringElement = document.getElementById(
+        "windowWithTranslate"
+      );
+      const lyricsWithoutBr = FormatterStringElement?.textContent?.replace(
+        /<br>/g,
+        "\n"
+      );
+
+      const targetElement = document.querySelector(
+        '[page-type="MUSIC_PAGE_TYPE_TRACK_LYRICS"]'
+      );
+
+      const lyricsElemnt = targetElement.querySelector(
+        '[page-type="MUSIC_PAGE_TYPE_TRACK_LYRICS"]'
+      );
 
       try {
         const response = await fetch(endpoint_ytmusic, {
@@ -287,7 +304,9 @@ if (current_url.includes(url_domain_ytmusic)) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            single_lyrics: `${formattedStringElement.textContent}`,
+            single_lyrics: `${
+              lyricsWithoutBr || formattedStringElement.textContent
+            }`,
             language: language,
             authors: normalizeAuthors,
             title_song: normalizeTitle,
@@ -297,9 +316,25 @@ if (current_url.includes(url_domain_ytmusic)) {
         const result = await response.json();
 
         const newlyrics = result?.single_lyrics;
-        formattedStringElement.textContent = newlyrics;
+
+        lyricsElemnt.style.position = "relative";
+
+        newWindow.style.backgroundColor = "#030303";
+        newWindow.style.color = "white";
+        newWindow.style.position = "absolute";
+        newWindow.style.display = "flex";
+        newWindow.style.height = "100%";
+        newWindow.style.top = "0";
+        newWindow.style.fontSize = "1.6em";
+        formattedStringElement.style.opacity = "0";
+        formattedStringElement.style.userSelect = "none";
+        newWindow.innerHTML = newlyrics?.replace(/\n/g, "<br>");
+
+        lyricsElemnt.appendChild(newWindow);
         translate_button.innerHTML = shineIconDark;
+        isConfirmedToChange = true;
       } catch (error) {
+        isConfirmedToChange = false;
         alert("An error has occurred with Shine Lyrics");
         translate_button.innerHTML = shineIconDark;
       }
@@ -308,8 +343,26 @@ if (current_url.includes(url_domain_ytmusic)) {
   };
 
   translate_button.addEventListener("click", handleClickTranslateLyrics);
+
   const main_container = CreateElementsShine();
   main_container.style.backgroundColor = "transparent";
   toolbar_container.style.backgroundColor = "transparent";
   ytnavbar_container.prepend(main_container);
+
+  const observer = new MutationObserver(() => {
+    if (isConfirmedToChange) {
+      const mywindow = document.getElementById("windowWithTranslate");
+      mywindow.style.display = "none";
+      mywindow.textContent = "";
+      const formattedStringElement = document.querySelector(
+        ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
+      );
+      formattedStringElement.style.opacity = "1";
+    }
+  });
+
+  observer.observe(document.getElementById("main-panel"), {
+    childList: true,
+    subtree: true,
+  });
 }
