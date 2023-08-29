@@ -89,7 +89,7 @@ toolbar_container.style.padding = "8px 12px";
 
 //////////shine title
 
-shine_title.innerHTML = `${shineIconDark} Shine`;
+shine_title.innerHTML = `${shineIconLight} Shine`;
 shine_title.style.color = "#ffffff";
 shine_title.style.fontWeight = "700";
 shine_title.style.display = "flex";
@@ -156,7 +156,7 @@ const CreateElementsShine = () => {
   return main_container;
 };
 
-const endpoint = "https://lyricbackend.whil.online";
+const endpoint = "https://lyricbackend.whil.online/test";
 
 const endpoint_spotify = `${endpoint}/translate`;
 
@@ -168,20 +168,27 @@ if (current_url.includes(url_domain_spotify)) {
   const handleClickTranslateLyrics = () => {
     translate_button.innerHTML = loaderHTML;
 
-    const tilte_song = document.querySelectorAll(
-      '[data-testid="context-item-link"]'
+    const nowPlayingWidget = document.querySelector(
+      '[data-testid="now-playing-widget"]'
     );
 
-    const authors = document.querySelectorAll(
+    const tilte_song = nowPlayingWidget.querySelectorAll(
+      '[data-testid="context-item-link"]'
+    );
+    const authors = nowPlayingWidget.querySelectorAll(
       '[data-testid="context-item-info-artist"]'
     );
 
     const language = language_selector.value;
-    const normalizeTitleSong = normalizeText(tilte_song?.[0]?.textContent);
+    const normalizeTitleSong = normalizeText(
+      Array.from(tilte_song)?.[0]?.textContent
+    );
 
-    const normalizeAuthors = Array.from(authors)
-      ?.map((item) => normalizeText(item?.textContent))
-      .join(",");
+    const normalizeAuthors = [
+      ...new Set(
+        Array.from(authors)?.map((item) => normalizeText(item?.textContent))
+      ),
+    ]?.join(",");
 
     const blocks_lyrics = document.querySelectorAll(
       '[data-testid="fullscreen-lyric"]'
@@ -207,6 +214,8 @@ if (current_url.includes(url_domain_spotify)) {
           body: JSON.stringify({
             lyrics,
             language,
+            authors: normalizeAuthors,
+            title_song: normalizeTitleSong,
           }),
         });
         const result = await response.json();
@@ -244,11 +253,33 @@ if (current_url.includes(url_domain_ytmusic)) {
       ".non-expandable.description.style-scope.ytmusic-description-shelf-renderer"
     );
 
+    const titleElement = document.querySelector(
+      ".title.style-scope.ytmusic-player-bar"
+    );
+    const authors = document.querySelectorAll(
+      "a.yt-simple-endpoint.style-scope.yt-formatted-string"
+    );
+
+    const normalizeTitle = normalizeText(titleElement?.textContent);
+
+    const normalizeAuthors = Array.from(authors)
+      ?.map((item) => normalizeText(item?.textContent))
+      ?.join(",");
+
     const handleTranslateLyrics = async () => {
       if (!formattedStringElement?.textContent?.length) {
         translate_button.innerHTML = shineIconDark;
         alert("Go to Lyrics page");
+        return;
       }
+
+      console.log({
+        single_lyrics: `${formattedStringElement.textContent}`,
+        language: language,
+        authors: normalizeAuthors,
+        title_song: normalizeTitle,
+      });
+
       try {
         const response = await fetch(endpoint_ytmusic, {
           method: "POST",
@@ -258,6 +289,8 @@ if (current_url.includes(url_domain_ytmusic)) {
           body: JSON.stringify({
             single_lyrics: `${formattedStringElement.textContent}`,
             language: language,
+            authors: normalizeAuthors,
+            title_song: normalizeTitle,
           }),
         });
 
