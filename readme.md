@@ -26,3 +26,11 @@ NOTE: This code and repository are open source so any legal action attempted wil
 Both spotify and you tube music can install the application. You can continue to use the extension without any problem
 
 ![1694972615430](image/readme/1694972615430.png)
+
+### How it works
+
+Shine Lyrics has full access to the browser using good programming practices and following all the rules established by google justifying why and how the extension was made this way.
+
+Shine DOES NOT COLLECT CONFIDENTIAL INFORMATION, AND DOES NOT COLLECT TRANSLATIONS OF SONGS. EVERYTHING IS COMPLIANT WITH THE LAW AND IN AN OPEN SOURCE WAY THE DEVELOPER OR USER HAS ALL THE RESPONSIBILITY OF USE. MILTON HAS NO AFFILIATION WITH THE USER OR DEVELOPER AND IS NOT RESPONSIBLE FOR THE USE OF SHINE LYRICS - OPEN SOURCE.
+
+Shine only extracts from the HTML of the current page the songs and translates the songs into different languages. Using Javascript Shine creates the visual elements and UI interaction.
