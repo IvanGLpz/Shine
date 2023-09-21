@@ -8,6 +8,8 @@ NOTE: This code and repository are open source so any legal action attempted wil
 
 1. Download the repository using the git tool or download the code.
 
+   ![1695311865329](image/readme/1695311865329.png)
+
    ```
    git clone https://github.com/IvanGLpz/Shine
    ```
